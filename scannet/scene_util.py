@@ -7,6 +7,7 @@ import numpy as np
 from sklearn.neighbors import NearestNeighbors
 from numpy import linalg as la
 import scipy.io as sio
+from six.moves import xrange
 
 def cart2sph(xyz):
   xy = xyz[:,0]**2+xyz[:,1]**2
@@ -64,7 +65,7 @@ def virtual_scan(xyz, mode=-1):
 
 if __name__=='__main__':
   pc = np.load('scannet_dataset/scannet_scenes/scene0015_00.npy')
-  print pc.shape
+  print(pc.shape)
   xyz = pc[:,:3]
   seg = pc[:,7]
   smpidx = virtual_scan(xyz,mode=2)
