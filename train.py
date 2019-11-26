@@ -35,6 +35,7 @@ parser.add_argument('--optimizer', default='adam', help='adam or momentum [defau
 parser.add_argument('--decay_step', type=int, default=200000, help='Decay step for lr decay [default: 200000]')
 parser.add_argument('--decay_rate', type=float, default=0.7, help='Decay rate for lr decay [default: 0.7]')
 parser.add_argument('--normal', action='store_true', help='Whether to use normal information')
+parser.add_argument('--dropout', action='store_true', help='Whether to dropout input points')
 FLAGS = parser.parse_args()
 
 EPOCH_CNT = 0
@@ -199,7 +200,10 @@ def train_one_epoch(sess, ops, train_writer):
     batch_idx = 0
     while TRAIN_DATASET.has_next_batch():
         batch_data, batch_label = TRAIN_DATASET.next_batch(augment=True)
-        #batch_data = provider.random_point_dropout(batch_data)
+        if FLAGS.dropout:
+            batch_data = provider.random_point_dropout(batch_data)
+        else:
+            assert False
         bsize = batch_data.shape[0]
         cur_batch_data[0:bsize,...] = batch_data
         cur_batch_label[0:bsize] = batch_label

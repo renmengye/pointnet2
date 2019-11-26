@@ -161,6 +161,8 @@ def conv2d(inputs,
         num_in_channels = inputs.get_shape()[1].value
       kernel_shape = [kernel_h, kernel_w,
                       num_in_channels, num_output_channels]
+      print('weight decay', weight_decay)
+      print('bn decay', bn_decay)
       kernel = _variable_with_weight_decay('weights',
                                            shape=kernel_shape,
                                            use_xavier=use_xavier,
